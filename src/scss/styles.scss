@@ -1,0 +1,14 @@
+// Your variable overrides
+
+$theme-colors: (
+  "primary": #7B1FA2,
+  "danger": #ff4136
+);
+
+gmap {
+    height: 50%;
+    width: 100%;
+}
+
+// Bootstrap and its default variables
+@import "node_modules/bootstrap/scss/bootstrap";
