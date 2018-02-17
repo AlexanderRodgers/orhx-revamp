@@ -5,10 +5,13 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const rootPath = path.join(__dirname);
 const nodemailer = require('nodemailer');
+const Recaptcha = require('express-recaptcha');
 
 const app = express();
 
 console.log(rootPath);
+
+var recaptcha = new Recaptcha('6LeWsEYUAAAAADLYQnrbgAkWjlFjo14s1JHjCylZ', '6LeWsEYUAAAAAJPa90ZtZ9g_uLPyu1sjfLMplv8Y');
 
 //Static folder
 app.use('/css', express.static(path.join(rootPath + '/css/')));
@@ -31,7 +34,20 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
+app.get('/', recaptcha.middleware.render, function(req, res){
+  res.render('login', { captcha:res.recaptcha });
+    next();
+});
+ 
+app.post('/', recaptcha.middleware.verify, function(req, res){
+    if (!req.recaptcha.error)
+        // success code
+    else
+        // error code
+});
+
 app.post('/send', (req, res) => {
+    
     console.log(req.body);
     //taco
     var name = req.body.name;
