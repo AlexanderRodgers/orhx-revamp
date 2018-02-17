@@ -1,5 +1,5 @@
 const env = require('dotenv').config();
-const bootstrap = require('express-bootstrap-service');
+const exphbs = require('express-handlebars');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -11,17 +11,17 @@ const app = express();
 
 console.log(rootPath);
 
-var recaptcha = new Recaptcha('6LeWsEYUAAAAADLYQnrbgAkWjlFjo14s1JHjCylZ', '6LeWsEYUAAAAAJPa90ZtZ9g_uLPyu1sjfLMplv8Y');
+var recaptcha = new Recaptcha('6Lfk80YUAAAAAADL4kpeKZ1jM6BjLPd0a9PZzlfp', '6Lfk80YUAAAAAH-HGwHpnJP_zcuXnlEm3u2H-X2f');
 
 //Static folder
 app.use('/css', express.static(path.join(rootPath + '/css/')));
 app.use('/js', express.static(path.join(rootPath + '/js/')));
 app.use('/img', express.static(path.join(rootPath + '/img/')));
+app.use('/', express.static(path.join(rootPath)));
 
 console.log(path.join(rootPath + '/css/'));
-
+/*
 // view engine setup
-/* I don't need this anymore.
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 */
@@ -31,28 +31,45 @@ app.use(bodyParser.json());
 
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname + '/index.html'));
-});
-
-app.get('/', recaptcha.middleware.render, function(req, res){
-  res.render('login', { captcha:res.recaptcha });
-    next();
-});
- 
-app.post('/', recaptcha.middleware.verify, function(req, res){
-    if (!req.recaptcha.error)
-        // success code
-    else
-        // error code
+    res.sendFile(rootPath + '/index.html');
 });
 
 app.post('/send', (req, res) => {
-    
+/*    Doesn't work.
+      if(
+    req.body.captcha === undefined ||
+    req.body.captcha === '' ||
+    req.body.captcha === null
+  ){
+    return res.json({"success": false, "msg":"Please select captcha"});
+  }
+
+  // Secret Key
+  const secretKey = '6LdpvDEUAAAAAHszsgB_nnal29BIKDsxwAqEbZzU';
+
+  // Verify URL
+  const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${req.body.captcha}&remoteip=${req.connection.remoteAddress}`;
+
+  // Make Request To VerifyURL
+  request(verifyUrl, (err, response, body) => {
+    body = JSON.parse(body);
+    console.log(body);
+
+    // If Not Successful
+    if(body.success !== undefined && !body.success){
+      return res.json({"success": false, "msg":"Failed captcha verification"});
+    }
+
+    //If Successful
+    return res.json({"success": true, "msg":"Captcha passed"});
+  });
+*/   
+    /* Works */
     console.log(req.body);
     //taco
     var name = req.body.name;
     var email = req.body.email;
-    var message = req.body.message + ' /nFrom: ' + email;
+    var message = req.body.message + ' From: ' + email;
     console.log(message);
     
     let transporter = nodemailer.createTransport({
@@ -60,9 +77,9 @@ app.post('/send', (req, res) => {
     secure: false,
     port: 25,
     auth: {
-        user: process.env.user,
+        user: 'rodg6714@eduhsd.k12.ca.us',
         //Do not push to github until password is scrubbed.
-        pass: process.env.pass
+        pass: '1173'
     },
     tls: {
         rejectUnauthorized: false
@@ -83,11 +100,10 @@ let helperOptions = {
         console.log("The message was sent.");
         console.log(info);
     }
-    
-    res.sendFile(path.join(__dirname + '/index.html'));
+    res.sendFile(rootPath + 'index.html');
 });
     
-})
+});
 
 app.all('*', function(req, res) {
     throw new Error("Bad request")

@@ -15,6 +15,7 @@
     "dotenv": "^5.0.0",
     "express": "^4.16.2",
     "express-bootstrap-service": "^1.0.0",
+    "express-handlebars": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0",
     "nodemailer": "^4.4.2",
