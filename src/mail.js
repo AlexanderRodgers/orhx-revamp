@@ -77,9 +77,9 @@ app.post('/send', (req, res) => {
     secure: false,
     port: 25,
     auth: {
-        user: 'rodg6714@eduhsd.k12.ca.us',
+        user: '',
         //Do not push to github until password is scrubbed.
-        pass: '1173'
+        pass: ''
     },
     tls: {
         rejectUnauthorized: false
@@ -100,7 +100,7 @@ let helperOptions = {
         console.log("The message was sent.");
         console.log(info);
     }
-    res.sendFile(rootPath + 'index.html');
+    res.redirect('/');
 });
     
 });
