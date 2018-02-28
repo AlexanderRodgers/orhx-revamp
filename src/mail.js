@@ -1,11 +1,9 @@
 const env = require('dotenv').config();
-const exphbs = require('express-handlebars');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const rootPath = path.join(__dirname);
 const nodemailer = require('nodemailer');
-const Recaptcha = require('express-recaptcha');
 
 const app = express();
 
