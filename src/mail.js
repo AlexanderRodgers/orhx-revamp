@@ -79,7 +79,7 @@ app.post('/send', (req, res) => {
     auth: {
         user: '',
         //Do not push to github until password is scrubbed.
-        pass: '1173'
+        pass: ''
     },
     tls: {
         rejectUnauthorized: false

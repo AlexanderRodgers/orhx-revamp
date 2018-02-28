@@ -8,8 +8,26 @@
   background-size: cover;
 }
 
+.carousel-indicators {
+top: 90%;
+transform: translateY(-10%);
+bottom: initial;
+-webkit-transform-style: preserve-3d;
+-moz-transform-style: preserve-3d;
+transform-style: preserve-3d;
+}
+
 .carousel-caption h3 {
+text-shadow: 2px 2px #000;
+color: white;
 font-size: 4rem;
+}
+
+.carousel-caption p {
+text-shadow: 1px 1px #000;
+font-weight: 400;
+color: white;
+font-size: 1.25rem;
 }
 
 .carousel-caption {
