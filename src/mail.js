@@ -9,8 +9,6 @@ const app = express();
 
 console.log(rootPath);
 
-var recaptcha = new Recaptcha('6Lfk80YUAAAAAADL4kpeKZ1jM6BjLPd0a9PZzlfp', '6Lfk80YUAAAAAH-HGwHpnJP_zcuXnlEm3u2H-X2f');
-
 //Static folder
 app.use('/css', express.static(path.join(rootPath + '/css/')));
 app.use('/js', express.static(path.join(rootPath + '/js/')));
@@ -75,9 +73,9 @@ app.post('/send', (req, res) => {
     secure: false,
     port: 25,
     auth: {
-        user: '',
+        user: 'rodg6714@eduhsd.k12.ca.us',
         //Do not push to github until password is scrubbed.
-        pass: ''
+        pass: '1173'
     },
     tls: {
         rejectUnauthorized: false
@@ -97,8 +95,8 @@ let helperOptions = {
     } else {
         console.log("The message was sent.");
         console.log(info);
-    }
     res.redirect('/');
+    }
 });
     
 });
